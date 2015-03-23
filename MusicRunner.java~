@@ -2,6 +2,10 @@ import java.util.Arrays;
 
 public class MusicRunner
 {
+  public static String Clean (String str)
+  {
+    return str.substring(1, str.length()-1).trim();
+  }
   public static void main (String[] args)
   {
     int count = 0;
@@ -22,9 +26,12 @@ public class MusicRunner
     // IS song data available
     while (data != null)
     {
-      // You probably will comment this out but for now print out the line so you can see what is there
+// You probably will comment this out but for now print out the line so you can see what is there
       System.out.println(Arrays.toString(data));
       
+      int year = Integer.parseInt(Clean(data[3]));
+      double score = Double.parseDouble(Clean(data[4]));
+      String notes = String.parseString(Clean(data[15]));
       // Let's try to create a Song object
       Song song = new Song(data[0], data[1]);  // data[0] is the artist and data[1] is the name
       

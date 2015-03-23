@@ -31,13 +31,13 @@ public class MusicRunner
       
       int year = Integer.parseInt(Clean(data[3]));
       double score = Double.parseDouble(Clean(data[4]));
-      String notes = String.parseString(Clean(data[15]));
+      String notes = (Clean(data[16]));
       // Let's try to create a Song object
-      Song song = new Song(data[0], data[1]);  // data[0] is the artist and data[1] is the name
-      
+      Song song = new Song(Clean(data[0]), Clean(data[1]), year, score, notes);  // data[0] is the artist and data[1] is the name
+      System.out.println(Clean(data[0]) + ", " + Clean(data[1]) + ", " + year + ", " + score + ", " + notes);
       count++;
       
-      if (count == 1)  // For now only read ONE song
+      if (count == 10)  // For now only read ONE song
         break;
       
       data = mr.getSongData();  // Get next line of song data
