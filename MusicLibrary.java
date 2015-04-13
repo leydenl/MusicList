@@ -7,13 +7,20 @@ public class MusicLibrary {
   
   public MusicLibrary() { 
     /* YOUR CONSTRUCTOR CODE HERE*/
+    this.songs = new ArrayList<Song>();
   }
   
+  public int size()
+  {
+    return songs.size(); 
+  }
+    
   /* 
    * Add song to songs ArrayList
    */
   public void addSong (Song song)
   {
+    songs.add(song);
   }
   
   /*
@@ -22,15 +29,18 @@ public class MusicLibrary {
    */
   public Song getSong (int num)
   {
-    return null;
+    return songs.get(num);
   }
+  
+
   
   /*
    * Sort song list by title
    */
   public void Sort ()
   {
-     currentSortField = field;
+    Collections.sort(songs);
+      
   }
   
   /*

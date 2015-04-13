@@ -1,15 +1,19 @@
-import java.util.Arrays;
+import java.util.*;
 
 public class MusicRunner
 {
-  public static String Clean (String str)
+  // Remove double quotes from beginning and end
+  public static String clean (String input)
   {
-    return str.substring(1, str.length()-1).trim();
+    return input.substring(1, input.length() - 1);
   }
+  
   public static void main (String[] args)
   {
+    
     int count = 0;
     MusicReader mr = new MusicReader();
+    MusicLibrary playlist = new MusicLibrary();
     
     mr.open("musiclist.csv");
     
@@ -26,17 +30,31 @@ public class MusicRunner
     // IS song data available
     while (data != null)
     {
-// You probably will comment this out but for now print out the line so you can see what is there
-      System.out.println(Arrays.toString(data));
+      // You probably will comment this out but for now print out the line so you can see what is there
+     // System.out.println(Arrays.toString(data));
       
-      int year = Integer.parseInt(Clean(data[3]));
-      double score = Double.parseDouble(Clean(data[4]));
-      String notes = (Clean(data[16]));
+      int year = 0;
+      double score = 0;
+      
+      try
+      {
+        year = Integer.parseInt(clean(data[3]));
+        score = Double.parseDouble(clean(data[4]));
+      }
+      catch (Exception e)
+      {
+      }
+      
       // Let's try to create a Song object
-      Song song = new Song(Clean(data[0]), Clean(data[1]), year, score, notes);  // data[0] is the artist and data[1] is the name
-      System.out.println(Clean(data[0]) + ", " + Clean(data[1]) + ", " + year + ", " + score + ", " + notes);
-      count++;
-      
+     Song song = new Song(clean(data[0]), clean(data[1]), year, score, clean(data[16]));  // data[0] is the artist and data[1] is the name
+     
+     String type = clean(data[2]);
+     if(type.equals("song"))
+     {
+       playlist.addSong(song);
+       count++;
+     }
+     
       if (count == 10)  // For now only read ONE song
         break;
       
@@ -44,5 +62,18 @@ public class MusicRunner
     }
     
     mr.close();
+    playlist.Sort();
+    
+    for (int i = playlist.size()-1; i >= 0; i--)
+    {
+       Song song = playlist.getSong(i);
+       System.out.println("Artist: " + song.artist + ", Name: " + song.name + ", Year: " + song.year + ", Score: " + song.score + ", Notes: " + song.notes );
+    }   
+    
+    Scanner scan = new Scanner(System.in);
+  // System.out.println( "Enter a number 0-9:");
+    int input = scan.nextInt();
+    System.out.println(playlist.getSong(input).notes);
+    
   }
 }
